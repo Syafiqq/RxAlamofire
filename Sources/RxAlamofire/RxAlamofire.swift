@@ -747,7 +747,8 @@ extension Reactive where Base: Alamofire.Session {
                       parameters: Parameters? = nil,
                       encoding: ParameterEncoding = URLEncoding.default,
                       headers: HTTPHeaders? = nil,
-                      interceptor: RequestInterceptor? = nil)
+                      interceptor: RequestInterceptor? = nil,
+                      requestModifier: Alamofire.Session.RequestModifier? = nil)
     -> Observable<DataRequest> {
     return request { manager in
       manager.request(url,
@@ -755,7 +756,8 @@ extension Reactive where Base: Alamofire.Session {
                       parameters: parameters,
                       encoding: encoding,
                       headers: headers,
-                      interceptor: interceptor)
+                      interceptor: interceptor,
+                      requestModifier: requestModifier)
     }
   }
 
@@ -1204,9 +1206,10 @@ extension Reactive where Base: Alamofire.Session {
   public func upload(multipartFormData: @escaping (MultipartFormData) -> Void,
                      to url: URLConvertible,
                      method: HTTPMethod,
-                     headers: HTTPHeaders? = nil) -> Observable<UploadRequest> {
+                     headers: HTTPHeaders? = nil,
+                     requestModifier: Alamofire.Session.RequestModifier? = nil) -> Observable<UploadRequest> {
     return request { manager in
-      manager.upload(multipartFormData: multipartFormData, to: url, method: method, headers: headers)
+      manager.upload(multipartFormData: multipartFormData, to: url, method: method, headers: headers, requestModifier: requestModifier)
     }
   }
 
